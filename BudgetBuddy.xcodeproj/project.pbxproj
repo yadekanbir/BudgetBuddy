@@ -7,15 +7,18 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		D77EF09B2A02812F0081526F /* AddCardForm.swift in Sources */ = {isa = PBXBuildFile; fileRef = D77EF09A2A02812F0081526F /* AddCardForm.swift */; };
 		D7EB33052A01A58000D842B3 /* BudgetBuddyApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7EB33042A01A58000D842B3 /* BudgetBuddyApp.swift */; };
 		D7EB33072A01A58000D842B3 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7EB33062A01A58000D842B3 /* ContentView.swift */; };
 		D7EB33092A01A58100D842B3 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D7EB33082A01A58100D842B3 /* Assets.xcassets */; };
 		D7EB330C2A01A58100D842B3 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D7EB330B2A01A58100D842B3 /* Preview Assets.xcassets */; };
 		D7EB330E2A01A58100D842B3 /* Persistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7EB330D2A01A58100D842B3 /* Persistence.swift */; };
 		D7EB33112A01A58100D842B3 /* BudgetBuddy.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = D7EB330F2A01A58100D842B3 /* BudgetBuddy.xcdatamodeld */; };
+		D7EB33192A01A64500D842B3 /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7EB33182A01A64500D842B3 /* MainView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		D77EF09A2A02812F0081526F /* AddCardForm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddCardForm.swift; sourceTree = "<group>"; };
 		D7EB33012A01A58000D842B3 /* BudgetBuddy.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BudgetBuddy.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D7EB33042A01A58000D842B3 /* BudgetBuddyApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BudgetBuddyApp.swift; sourceTree = "<group>"; };
 		D7EB33062A01A58000D842B3 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -23,6 +26,7 @@
 		D7EB330B2A01A58100D842B3 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		D7EB330D2A01A58100D842B3 /* Persistence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Persistence.swift; sourceTree = "<group>"; };
 		D7EB33102A01A58100D842B3 /* BudgetBuddy.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = BudgetBuddy.xcdatamodel; sourceTree = "<group>"; };
+		D7EB33182A01A64500D842B3 /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -36,6 +40,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		D77EF0992A0281150081526F /* AddCard */ = {
+			isa = PBXGroup;
+			children = (
+				D77EF09A2A02812F0081526F /* AddCardForm.swift */,
+			);
+			path = AddCard;
+			sourceTree = "<group>";
+		};
 		D7EB32F82A01A58000D842B3 = {
 			isa = PBXGroup;
 			children = (
@@ -55,6 +67,7 @@
 		D7EB33032A01A58000D842B3 /* BudgetBuddy */ = {
 			isa = PBXGroup;
 			children = (
+				D7EB33172A01A61B00D842B3 /* Main */,
 				D7EB33042A01A58000D842B3 /* BudgetBuddyApp.swift */,
 				D7EB33062A01A58000D842B3 /* ContentView.swift */,
 				D7EB33082A01A58100D842B3 /* Assets.xcassets */,
@@ -71,6 +84,15 @@
 				D7EB330B2A01A58100D842B3 /* Preview Assets.xcassets */,
 			);
 			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		D7EB33172A01A61B00D842B3 /* Main */ = {
+			isa = PBXGroup;
+			children = (
+				D77EF0992A0281150081526F /* AddCard */,
+				D7EB33182A01A64500D842B3 /* MainView.swift */,
+			);
+			path = Main;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -144,8 +166,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				D7EB330E2A01A58100D842B3 /* Persistence.swift in Sources */,
+				D77EF09B2A02812F0081526F /* AddCardForm.swift in Sources */,
 				D7EB33072A01A58000D842B3 /* ContentView.swift in Sources */,
 				D7EB33052A01A58000D842B3 /* BudgetBuddyApp.swift in Sources */,
+				D7EB33192A01A64500D842B3 /* MainView.swift in Sources */,
 				D7EB33112A01A58100D842B3 /* BudgetBuddy.xcdatamodeld in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
