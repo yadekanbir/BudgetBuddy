@@ -113,8 +113,8 @@ extension UIColor {
 struct AddCardForm_Previews: PreviewProvider {
     static var previews: some View {
         let context = PersistenceController.shared.container.viewContext
-//        AddCardForm()
-        MainView()
+        AddCardForm()
+//        MainView()
             .environment(\.managedObjectContext, context)
         
     }

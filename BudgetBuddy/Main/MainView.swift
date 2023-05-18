@@ -10,6 +10,7 @@ import SwiftUI
 struct MainView: View {
     
     @State private var shouldPresentAddCardFrom = false
+    
     @Environment (\.managedObjectContext) private var viewContext
     @FetchRequest (
         sortDescriptors: [NSSortDescriptor(keyPath: \Card.timestamp, ascending: true)], animation: .default)
@@ -23,12 +24,14 @@ struct MainView: View {
                     TabView{
                         ForEach(cards) { card in
                             CreditCardView(card: card)
-                                .padding(.bottom, 40)
+                                .padding(.bottom, 80)
                         }
                     }
                     .tabViewStyle(PageTabViewStyle(indexDisplayMode: .always))
                     .frame(height: 280)
                     .indexViewStyle(.page(backgroundDisplayMode: .always))
+                } else {
+                    emptyPromptMessage
                 }
                 
                 Spacer()
@@ -41,6 +44,24 @@ struct MainView: View {
                 addItemButton
                 deleteAllButton
             }, trailing: addCardButton)
+        }
+    }
+    
+    private var emptyPromptMessage: some View {
+        VStack{
+            Text("You currently have no cards in the system.")
+                .font(.system(size: 18, weight: .semibold))
+                .padding(.vertical)
+                .multilineTextAlignment(.center)
+            Button {
+                shouldPresentAddCardFrom.toggle()
+            } label: {
+                Text("+ Add Your First Card")
+                    .foregroundColor(.white)
+            }
+            .padding(EdgeInsets(top: 10, leading: 14, bottom: 10, trailing: 14))
+            .background(Color.blue)
+            .cornerRadius(15)
         }
     }
     
@@ -69,6 +90,7 @@ struct MainView: View {
                 do{
                     try viewContext.save()
                 } catch {
+                    
                 }
             }
             
@@ -80,10 +102,38 @@ struct MainView: View {
         
         let card: Card
         
+        @State private var shouldShowActionSheet = false
+        
+        private func handleDelete() {
+            let viewContext = PersistenceController.shared.container.viewContext
+            viewContext.delete(card)
+            do {
+                try viewContext.save()
+            } catch {
+                
+            }
+        }
+        
         var body: some View {
             VStack(alignment: .leading, spacing: 16) {
-                Text(card.name ?? "")
-                    .font(.system(size: 24, weight: .semibold))
+                HStack{
+                    Text(card.name ?? "")
+                        .font(.system(size: 24, weight: .semibold))
+                    Spacer()
+                    Button {
+                        shouldShowActionSheet.toggle()
+                    } label: {
+                        Image(systemName: "ellipsis")
+                            .font(.system(size: 20, weight: .bold))
+                    }
+                    .actionSheet(isPresented: $shouldShowActionSheet){
+                        .init(title: Text(self.card.name ?? ""), message: Text("Options"),
+                              buttons: [.destructive(Text("Delete Card"), action: handleDelete),
+                                        .cancel()
+                              ])
+                    }
+                }
+        
                 HStack{
                     Image("visa")
                         .resizable()
@@ -126,7 +176,7 @@ struct MainView: View {
             shouldPresentAddCardFrom.toggle()
         }, label: {
            Text("+ Card")
-               .foregroundColor(.black)
+               .foregroundColor(.blue)
                .font(.system(size: 20, weight: .medium))
                .padding()
        })
