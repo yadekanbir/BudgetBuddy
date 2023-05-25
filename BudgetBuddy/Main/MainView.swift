@@ -9,7 +9,8 @@ import SwiftUI
 
 struct MainView: View {
     
-    @State private var shouldPresentAddCardFrom = false
+    @State private var shouldPresentAddCardForm = false
+    @State private var shouldShowAddTransactionForm = false
     
     @Environment (\.managedObjectContext) private var viewContext
     @FetchRequest (
@@ -24,26 +25,39 @@ struct MainView: View {
                     TabView{
                         ForEach(cards) { card in
                             CreditCardView(card: card)
-                                .padding(.bottom, 80)
+                                .padding(.bottom, 40)
                         }
                     }
                     .tabViewStyle(PageTabViewStyle(indexDisplayMode: .always))
                     .frame(height: 280)
                     .indexViewStyle(.page(backgroundDisplayMode: .always))
+                    
+                    Text("Get started by adding your first transaction")
+                    
+                    Button {
+                        shouldShowAddTransactionForm.toggle()
+                    } label: {
+                        Text("+ Transaction")
+                            .padding(EdgeInsets(top: 10, leading: 14, bottom: 10, trailing: 14))
+                            .background(Color.black)
+                            .foregroundColor(.white)
+                            .cornerRadius(CGFloat(5))
+                    }
+                    .fullScreenCover(isPresented: $shouldShowAddTransactionForm) {
+                        AddTransactionForm()
+                    }
+                    
                 } else {
                     emptyPromptMessage
                 }
                 
                 Spacer()
-                    .fullScreenCover(isPresented: $shouldPresentAddCardFrom, onDismiss: nil) {
+                    .fullScreenCover(isPresented: $shouldPresentAddCardForm, onDismiss: nil) {
                         AddCardForm()
                     }
             }
             .navigationTitle("Credit Cards")
-            .navigationBarItems(leading: HStack {
-                addItemButton
-                deleteAllButton
-            }, trailing: addCardButton)
+            .navigationBarItems(trailing: addCardButton)
         }
     }
     
@@ -54,7 +68,7 @@ struct MainView: View {
                 .padding(.vertical)
                 .multilineTextAlignment(.center)
             Button {
-                shouldPresentAddCardFrom.toggle()
+                shouldPresentAddCardForm.toggle()
             } label: {
                 Text("+ Add Your First Card")
                     .foregroundColor(.white)
@@ -63,39 +77,6 @@ struct MainView: View {
             .background(Color.blue)
             .cornerRadius(15)
         }
-    }
-    
-    var deleteAllButton: some View {
-        Button {
-            cards.forEach { card in
-                viewContext.delete(card)
-            }
-            do {
-                try viewContext.save()
-            } catch {
-                
-            }
-        } label : {
-            Text("Delete All")
-        }
-    }
-    
-    var addItemButton: some View {
-        Button(action: {
-            withAnimation {
-                let viewContext = PersistenceController.shared.container.viewContext
-                let card = Card(context: viewContext)
-                card.timestamp = Date()
-                
-                do{
-                    try viewContext.save()
-                } catch {
-                    
-                }
-            }
-            
-        }, label: {
-            Text("Add Item")})
     }
     
     struct CreditCardView: View {
@@ -145,7 +126,7 @@ struct MainView: View {
                     Image(imageName)
                         .resizable()
                         .scaledToFit()
-                        .frame(height: 44)
+                        .frame(height: 48)
                         .clipped()
                     Spacer()
                     Text("Balance: $5,000")
@@ -190,10 +171,10 @@ struct MainView: View {
     
     var addCardButton: some View {
         Button(action: {
-            shouldPresentAddCardFrom.toggle()
+            shouldPresentAddCardForm.toggle()
         }, label: {
            Text("+ Card")
-               .foregroundColor(.blue)
+               .foregroundColor(.black)
                .font(.system(size: 20, weight: .medium))
                .padding()
        })

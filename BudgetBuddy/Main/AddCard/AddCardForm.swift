@@ -105,7 +105,7 @@ struct AddCardForm: View {
                 card.expYear = Int16(self.year)
                 card.timestamp = Date()
                 card.color = UIColor(self.color).encode()
-                
+                card.type = cardType
                 do {
                     try viewContext.save()
                     presentationMode.wrappedValue.dismiss()
