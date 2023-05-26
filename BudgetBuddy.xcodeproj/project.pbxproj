@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		D71A8D2D2A1FDCDC001F885E /* AddTransactionForm.swift in Sources */ = {isa = PBXBuildFile; fileRef = D71A8D2C2A1FDCDC001F885E /* AddTransactionForm.swift */; };
 		D77EF09B2A02812F0081526F /* AddCardForm.swift in Sources */ = {isa = PBXBuildFile; fileRef = D77EF09A2A02812F0081526F /* AddCardForm.swift */; };
+		D7B042E12A2128760052F286 /* TransactionsListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7B042E02A2128760052F286 /* TransactionsListView.swift */; };
 		D7EB33052A01A58000D842B3 /* BudgetBuddyApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7EB33042A01A58000D842B3 /* BudgetBuddyApp.swift */; };
 		D7EB33092A01A58100D842B3 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D7EB33082A01A58100D842B3 /* Assets.xcassets */; };
 		D7EB330C2A01A58100D842B3 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D7EB330B2A01A58100D842B3 /* Preview Assets.xcassets */; };
@@ -20,6 +21,7 @@
 /* Begin PBXFileReference section */
 		D71A8D2C2A1FDCDC001F885E /* AddTransactionForm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddTransactionForm.swift; sourceTree = "<group>"; };
 		D77EF09A2A02812F0081526F /* AddCardForm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddCardForm.swift; sourceTree = "<group>"; };
+		D7B042E02A2128760052F286 /* TransactionsListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionsListView.swift; sourceTree = "<group>"; };
 		D7EB33012A01A58000D842B3 /* BudgetBuddy.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BudgetBuddy.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D7EB33042A01A58000D842B3 /* BudgetBuddyApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BudgetBuddyApp.swift; sourceTree = "<group>"; };
 		D7EB33082A01A58100D842B3 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -44,6 +46,7 @@
 			isa = PBXGroup;
 			children = (
 				D71A8D2C2A1FDCDC001F885E /* AddTransactionForm.swift */,
+				D7B042E02A2128760052F286 /* TransactionsListView.swift */,
 			);
 			path = Transaction;
 			sourceTree = "<group>";
@@ -174,6 +177,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				D7EB330E2A01A58100D842B3 /* Persistence.swift in Sources */,
+				D7B042E12A2128760052F286 /* TransactionsListView.swift in Sources */,
 				D77EF09B2A02812F0081526F /* AddCardForm.swift in Sources */,
 				D7EB33052A01A58000D842B3 /* BudgetBuddyApp.swift in Sources */,
 				D7EB33192A01A64500D842B3 /* MainView.swift in Sources */,

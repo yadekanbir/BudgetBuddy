@@ -10,18 +10,13 @@ import SwiftUI
 struct MainView: View {
     
     @State private var shouldPresentAddCardForm = false
-    @State private var shouldShowAddTransactionForm = false
     
     @Environment (\.managedObjectContext) private var viewContext
+    
     @FetchRequest (
         sortDescriptors: [NSSortDescriptor(keyPath: \Card.timestamp, ascending: false)], animation: .default)
     
     private var cards: FetchedResults<Card>
-    
-    @FetchRequest (
-        sortDescriptors: [NSSortDescriptor(keyPath: \CardTransaction.timestamp, ascending: false)], animation: .default)
-    
-    private var transactions: FetchedResults<CardTransaction>
     
     var body: some View {
         NavigationView {
@@ -36,62 +31,9 @@ struct MainView: View {
                     .tabViewStyle(PageTabViewStyle(indexDisplayMode: .always))
                     .frame(height: 280)
                     .indexViewStyle(.page(backgroundDisplayMode: .always))
-                    
-                    Text("Get started by adding your first transaction")
-                    
-                    Button {
-                        shouldShowAddTransactionForm.toggle()
-                    } label: {
-                        Text("+ Transaction")
-                            .padding(EdgeInsets(top: 10, leading: 14, bottom: 10, trailing: 14))
-                            .background(Color.black)
-                            .foregroundColor(.white)
-                            .cornerRadius(CGFloat(5))
-                    }
-                    .fullScreenCover(isPresented: $shouldShowAddTransactionForm) {
-                        AddTransactionForm()
-                    }
-                    
-                    ForEach (transactions) { transaction in
-                        VStack {
-                            HStack {
-                                VStack (alignment: .leading) {
-                                    Text(transaction.name ?? "")
-                                        .font(.headline)
-                                    
-                                    if let date = transaction.timestamp {
-                                        Text(dateFormatter.string(from: date))
-                                    }
-                                }
-                                Spacer()
-                                VStack(alignment: .trailing) {
-                                    Button {
-                                        
-                                    } label: {
-                                        Image(systemName: "ellipsis")
-                                            .font(.system(size: 24))
-                                    }
-                                    .padding(CGFloat(5))
-                                    
-                                    Text(String(format: "$%.2f", transaction.amount ))
-                                }
-                            }
-                            
-                            if let photoData = transaction.photoData,
-                               let uiImage = UIImage(data: photoData){
-                                Image(uiImage: uiImage)
-                                    .resizable()
-                                    .scaledToFill()
-                            }
-                        }
-                            .foregroundColor(Color(.label))
-                            .padding()
-                            .background(Color.white)
-                            .cornerRadius(5)
-                            .shadow(radius: 5)
-                            .padding()
-                    }
-                     
+
+                    TransactionsListView()
+            
                 } else {
                     emptyPromptMessage
                 }
@@ -123,13 +65,6 @@ struct MainView: View {
             .cornerRadius(15)
         }
     }
-    
-    private var dateFormatter: DateFormatter = {
-        let formatter = DateFormatter()
-        formatter.dateStyle = .short
-        formatter.timeStyle = .none
-        return formatter
-    }()
     
     struct CreditCardView: View {
         
