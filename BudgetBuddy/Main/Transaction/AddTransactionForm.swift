@@ -14,7 +14,8 @@ struct AddTransactionForm: View {
     @State private var name = ""
     @State private var amount = ""
     @State private var date = Date()
-    
+    @State private var photoData: Data?
+
     @State private var shouldPresentPhotoPicker = false
     
     var body: some View {
@@ -53,8 +54,6 @@ struct AddTransactionForm: View {
                 .navigationBarItems(leading: cancelButton, trailing: saveButton)
         }
     }
-    
-    @State private var photoData: Data?
     
     struct PhotoPickerView: UIViewControllerRepresentable {
         
@@ -109,14 +108,27 @@ struct AddTransactionForm: View {
     }
     
     private var saveButton: some View {
-        Button(action: {
+        Button {
+            let context = PersistenceController.shared.container.viewContext
+            let transaction = CardTransaction(context: context)
+            transaction.name = self.name
+            transaction.timestamp = self.date
+            transaction.amount = Float(self.amount) ?? 0
+            transaction.photoData = self.photoData
             
-        }, label: {
+            do {
+                try context.save()
+                presentationMode.wrappedValue.dismiss()
+            } catch let customError {
+                print("Failed to save transaction \(customError)")
+            }
+            
+        } label: {
             Text("Save")
                 .foregroundColor(.blue)
                 .font(.system(size: 20, weight: .medium))
                 .padding()
-        })
+        }
     }
 }
 

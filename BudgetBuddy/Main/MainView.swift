@@ -18,10 +18,15 @@ struct MainView: View {
     
     private var cards: FetchedResults<Card>
     
+    @FetchRequest (
+        sortDescriptors: [NSSortDescriptor(keyPath: \CardTransaction.timestamp, ascending: false)], animation: .default)
+    
+    private var transactions: FetchedResults<CardTransaction>
+    
     var body: some View {
         NavigationView {
             ScrollView {
-                if !cards.isEmpty{
+                if !cards.isEmpty {
                     TabView{
                         ForEach(cards) { card in
                             CreditCardView(card: card)
@@ -47,6 +52,46 @@ struct MainView: View {
                         AddTransactionForm()
                     }
                     
+                    ForEach (transactions) { transaction in
+                        VStack {
+                            HStack {
+                                VStack (alignment: .leading) {
+                                    Text(transaction.name ?? "")
+                                        .font(.headline)
+                                    
+                                    if let date = transaction.timestamp {
+                                        Text(dateFormatter.string(from: date))
+                                    }
+                                }
+                                Spacer()
+                                VStack(alignment: .trailing) {
+                                    Button {
+                                        
+                                    } label: {
+                                        Image(systemName: "ellipsis")
+                                            .font(.system(size: 24))
+                                    }
+                                    .padding(CGFloat(5))
+                                    
+                                    Text(String(format: "$%.2f", transaction.amount ))
+                                }
+                            }
+                            
+                            if let photoData = transaction.photoData,
+                               let uiImage = UIImage(data: photoData){
+                                Image(uiImage: uiImage)
+                                    .resizable()
+                                    .scaledToFill()
+                            }
+                        }
+                            .foregroundColor(Color(.label))
+                            .padding()
+                            .background(Color.white)
+                            .cornerRadius(5)
+                            .shadow(radius: 5)
+                            .padding()
+                    }
+                     
                 } else {
                     emptyPromptMessage
                 }
@@ -78,6 +123,13 @@ struct MainView: View {
             .cornerRadius(15)
         }
     }
+    
+    private var dateFormatter: DateFormatter = {
+        let formatter = DateFormatter()
+        formatter.dateStyle = .short
+        formatter.timeStyle = .none
+        return formatter
+    }()
     
     struct CreditCardView: View {
         
