@@ -29,7 +29,6 @@ struct AddCardForm: View {
             let c = Color(uiColor)
             _color = State(initialValue: c)
         }
-            
     }
     
     @Environment(\.presentationMode) var presentationMode

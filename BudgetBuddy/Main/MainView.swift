@@ -15,25 +15,31 @@ struct MainView: View {
     
     @FetchRequest (
         sortDescriptors: [NSSortDescriptor(keyPath: \Card.timestamp, ascending: false)], animation: .default)
-    
     private var cards: FetchedResults<Card>
+    
+    @State private var cardSelectionIndex = 0
     
     var body: some View {
         NavigationView {
             ScrollView {
+                
                 if !cards.isEmpty {
-                    TabView{
-                        ForEach(cards) { card in
+                    TabView(selection: $cardSelectionIndex) {
+                        ForEach(0..<cards.count) { i in
+                            let card = cards[i]
                             CreditCardView(card: card)
                                 .padding(.bottom, 40)
+                                .tag(i)
                         }
                     }
                     .tabViewStyle(PageTabViewStyle(indexDisplayMode: .always))
-                    .frame(height: 280)
-                    .indexViewStyle(.page(backgroundDisplayMode: .always))
-
-                    TransactionsListView()
-            
+                        .frame(height: 280)
+                        .indexViewStyle(.page(backgroundDisplayMode: .always))
+                    
+                    if let selectedCard = cards[cardSelectionIndex] {
+                        TransactionsListView(card: selectedCard)
+                    }
+                    
                 } else {
                     emptyPromptMessage
                 }
