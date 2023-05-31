@@ -18,26 +18,30 @@ struct MainView: View {
     private var cards: FetchedResults<Card>
     
     @State private var cardSelectionIndex = 0
+    @State private var selectedCardHash = -1
     
     var body: some View {
         NavigationView {
             ScrollView {
-                
                 if !cards.isEmpty {
-                    TabView(selection: $cardSelectionIndex) {
-                        ForEach(0..<cards.count) { i in
-                            let card = cards[i]
+                    TabView(selection: $selectedCardHash) {
+                        ForEach(cards) { card in
                             CreditCardView(card: card)
-                                .padding(.bottom, 40)
-                                .tag(i)
+                                .padding(.bottom, 50)
+                                .tag(card.hash)
                         }
                     }
                     .tabViewStyle(PageTabViewStyle(indexDisplayMode: .always))
                         .frame(height: 280)
                         .indexViewStyle(.page(backgroundDisplayMode: .always))
+                        .onAppear {
+                            self.selectedCardHash = cards.first?.hash ?? -1
+                        }
                     
-                    if let selectedCard = cards[cardSelectionIndex] {
-                        TransactionsListView(card: selectedCard)
+                    if let firstIndex = cards.firstIndex(where: {
+                        $0.hash == selectedCardHash }) {
+                        let card = self.cards[firstIndex]
+                        TransactionsListView(card: card)
                     }
                     
                 } else {
@@ -46,7 +50,9 @@ struct MainView: View {
                 
                 Spacer()
                     .fullScreenCover(isPresented: $shouldPresentAddCardForm, onDismiss: nil) {
-                        AddCardForm()
+                        AddCardForm(card: nil) { card in
+                            self.selectedCardHash = card.hash
+                        }
                     }
             }
             .navigationTitle("Credit Cards")
